@@ -15,25 +15,22 @@
 //           TRIG                         PIN 11
 
 //           CIRCUIT              ->      Arduino or Redboard
-//           ALL GND LEDS                 2.2k RESISISTOR TO GND
-//           GREEN LED (+)                PIN 5
-//           YELLOW LED (+)               PIN 6
-//           RED LED (+)                  PIN 7
+//           ALL GND LEDS                 250ohm RESISISTORs TO GND
+//           GREEN LED (+)                PIN 2
+//           YELLOW LED (+)               PIN 3
+//           RED LED (+)                  PIN 4
 //           POTENTIOMETER(LEFT PIN)      GND PIN
-//           POTENTIOMETER(MIDDLE PIN)    2.2k RESISTOR TO SPEAKER (+)
-//           POTENTIOMETER(RIGHT PIN)     PIN 12
+//           POTENTIOMETER(MIDDLE PIN)    125ohm RESISTOR TO SPEAKER (+)
+//           POTENTIOMETER(RIGHT PIN)     PIN 9
 //           SPEAKER (-)                  GND PIN
 
-// SOFTWARE: https://www.arduino.cc/reference/en/libraries/circularbuffer/
-//           Install CircularBuffer library by clicking the link above, and clicking on version 1.3.3 near the bottom of the page.
-//           Once installed, in the Arduino IDE, click: Sketch -> Include Library -> Add .Zip Library -> open the downloaded .Zip file
+// SOFTWARE: None
 
-// EXECUTE: To use the code, make all connections to an arduino or redboard as stated above. Download the cicular buffer library into the
-//          the Arduino IDE. Load code onto board. If desired, the serial monitor can be used to display distances.
+// EXECUTE: To use the code, make all connections to an arduino or redboard as stated above. 
+//          If desired, the serial monitor can be used to display distances.
 
 // RESOURCE: This code is based off of two resources listed below:
 //           https://www.makerguides.com/hc-sr04-arduino-tutorial/
-//           https://github.com/rlogiacco/CircularBuffer/blob/master/examples/CircularBuffer/CircularBuffer.ino
 
 // PURPOSE: This code is used for testing the HC-SR04 and Y401 Adafruit ultrasonic sensors. If chosen, this code can be used as final code
 //          for the design.
@@ -46,21 +43,25 @@
 // don't connect speaker pin to pin 13, it will chirp at start up due to the LED flashing
 #define SPEAKER_PIN 9
 
+//#define RED_LED 7
+//#define YELLOW_LED 6
+//#define GREEN_LED 5
+
 #define RED_LED 4
 #define YELLOW_LED 3
 #define GREEN_LED 2
 
 // distance ranges
-int upperLimit = 40;
-int lowerLimit = 20;
+int upperLimit = 60;
+int lowerLimit = 40;
 
 // speaker frequencies
-int yellowFrequency = 600;
-int redFrequency = 700;
+int yellowFrequency = 730;
+int redFrequency = 750;
 
 // main loop timing
 long previousMillis = 0;
-float interval = 200;
+float interval = 500;
 
 long previousMillisTrigger = 0;
 long previousMillisTrigger2 = 0;
@@ -69,7 +70,7 @@ long previousMillisTrigger2 = 0;
 long duration;
 float distance;
 
-float current_dist = 0;
+float current_dist;
 
 
 void setup() {
@@ -90,7 +91,6 @@ void setup() {
 
   // small delay at startup to allow everything to calm down
   delay(50);
-
 }
 
 void loop() {
@@ -164,9 +164,9 @@ float distanceInAdafruit() {
   // Calculate the distance: distance = length of pulse (us) * speed of sound (us) * 1/2 (sound waves traveling to and from object)
   distance = duration * 0.034 / 2.0;
 
-  Serial.print("Distance is: ");
-  Serial.print(distance);
-  Serial.println(" cm");
+  Serial.print("distance is: ");
+    Serial.print(distance);
+    Serial.println(" ft");
 
   return distance;
 }
